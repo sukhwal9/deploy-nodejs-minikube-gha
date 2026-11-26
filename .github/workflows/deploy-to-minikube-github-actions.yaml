@@ -14,11 +14,9 @@ jobs:
         run: kubectl get pods -A
       - name: Build image
         run: |
-          export SHELL=/bin/bash
-          eval $(minikube -p minikube docker-env)
-          docker build -f ./Dockerfile -t devopshint/node-app:latest .
+          minikube image build -t devopshint/node-app:latest .
           echo -n "verifying images:"
-          docker images
+          minikube image ls
       - name: Deploy to minikube
         run: |
           kubectl apply -f k8s-node-app.yaml
